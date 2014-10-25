@@ -6,6 +6,7 @@
 
 namespace hlcg
 {
+  class Assembly;
   class Node
   {
   public:
@@ -14,6 +15,8 @@ namespace hlcg
     virtual ~Node() {}
   public:
     std::vector<Node *> attribs;
+    
+    virtual Assembly * assembly() { return parent->assembly(); }
     
   public:
     // Builds this node
