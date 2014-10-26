@@ -10,7 +10,7 @@
 
 namespace hlcg
 {
-  class Module : public Node//, public Container
+  class Module : public Node, public Container
   {
   public:
     // Module name
@@ -19,9 +19,14 @@ namespace hlcg
     std::vector<Node *> members;
     
   public:
-    Module(std::wstring name);
+    Module(Assembly *ass, std::wstring name);
     
-    virtual void build(Build &b);
+    virtual void build();
     virtual void clear();
+    
+  public:
+    // Container
+    virtual std::vector<Node *> & get_members() { on_get_members(this); return members; }
+    virtual std::vector<Node *> get_member_by_name(std::wstring name);
   };
 }

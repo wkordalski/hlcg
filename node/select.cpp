@@ -5,12 +5,17 @@
 #include "../assembly/error.hpp"
 
 namespace hlcg {
-  void Global::build ( Build &b )
+  Global::Global ( Assembly *ass )
   {
-    this->selected.reserve(b.ass->modules.size() + b.ass->depmods.size());
-    for(auto m : b.ass->modules)
+    this->assembly = ass;
+  }
+
+  void Global::build()
+  {
+    this->selected.reserve(assembly->modules.size() + assembly->depmods.size());
+    for(auto m : assembly->modules)
       this->selected.push_back(m);
-    for(auto m : b.ass->depmods)
+    for(auto m : assembly->depmods)
       this->selected.push_back(m);
   }
 
@@ -19,29 +24,27 @@ namespace hlcg {
     this->selected.clear();
   }
 
-  Member::Member ( Node *place, std::wstring name )
+  Member::Member ( Assembly *ass, Node *place, std::wstring name )
   {
+    this->assembly = ass;
     this->name = name;
     this->place = place;
   }
   
-  void Member::build ( Build &b )
+  void Member::build()
   {
     auto *selector = dynamic_cast<Selector*>(this->place);
     if(selector == nullptr) throw Error(this, "place is not a selector");
     
-    this->place->build(b);
+    this->place->build();
     for(Node *m : selector->get_selected())
     {
       auto *container = dynamic_cast<Container*>(m);
       if(container == nullptr) continue;
       
-      for(Node *n : container->get_members())
+      for(Node *n : container->get_member_by_name(name))
       {
-	auto *named = dynamic_cast<Named *>(n);
-	if(named == nullptr) continue;
-	if(named->get_name() == this->name)
-	  this->selected.push_back(n);
+	this->selected.push_back(n);
       }
     }
   }
@@ -51,13 +54,14 @@ namespace hlcg {
     this->selected.clear();
   }
 
-  FindNamedNode::FindNamedNode ( Node *place, std::wstring name )
+  FindNamedNode::FindNamedNode ( Assembly *ass, Node *place, std::wstring name )
   {
+    this->assembly = ass;
     this->name = name;
     this->place = place;
   }
 
-  void FindNamedNode::build ( Build &b )
+  void FindNamedNode::build()
   {
     // TODO: do lookup for named nodes
   }

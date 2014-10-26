@@ -1,12 +1,15 @@
 #pragma once
 
 // HLCG headers
-#include "build.hpp"
 #include "../node/module.hpp"
 
 // Standard library headers
 #include <map>
 #include <vector>
+
+// LLVM library headers
+#include <llvm/IR/LLVMContext.h>
+#include <llvm/IR/Module.h>
 
 namespace hlcg
 {
@@ -24,9 +27,14 @@ namespace hlcg
     std::vector<Module *> depmods;
     
   public:
+    Assembly();
     // Builds modules
-    Build build();
+    void build();
     void clear();
+
+    // LLVM module
+    llvm::LLVMContext *ctx;
+    llvm::Module *mod;
     
   protected:
     // Loads required modules

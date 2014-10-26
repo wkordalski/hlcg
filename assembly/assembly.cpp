@@ -1,13 +1,14 @@
 #include "assembly.hpp"
 
 namespace hlcg {
-  Build Assembly::build()
+  Assembly::Assembly()
   {
-    Build b;
-    b.ass = this;
-    b.ctx = new llvm::LLVMContext();
-    b.mod = new llvm::Module("Module", *(b.ctx));
-    return b;
+    ctx = new llvm::LLVMContext();
+    mod = new llvm::Module("hlcgModule", *(ctx));
+  }
+  
+  void Assembly::build()
+  {
   }
 
   void Assembly::clear()

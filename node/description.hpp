@@ -32,11 +32,14 @@ namespace hlcg {
   {
   public:
     virtual std::vector<Node *> & get_members() = 0;
+    virtual std::vector<Node *> get_member_by_name(std::wstring name) = 0;
     
     // Invoked when a lookup of a member from this container is performed.
     // Use this to load some members to the container before.
     // Usefull in code compilation.
-    Signal<void(Container *)> on_select_member;
+    // The second event is more preferable, because it causes less code parsing then.
+    Signal<void(Container *)> on_get_members;
+    Signal<void(Container *, std::wstring)> on_get_member_by_name;
   };
   
   // Can return a specialization

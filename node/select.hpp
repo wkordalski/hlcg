@@ -14,7 +14,9 @@ namespace hlcg {
     // No params or childs
     
   public:
-    virtual void build(Build &b);
+    Global(Assembly *ass);
+    
+    virtual void build();
     virtual void clear();
     
     virtual std::vector<Node *> & get_selected() { return selected; }
@@ -32,10 +34,10 @@ namespace hlcg {
     Node *place;
     
   public:
-    Member(Node *place, std::wstring name);
+    Member(Assembly *ass, Node *place, std::wstring name);
     
   public:
-    virtual void build(Build &b);
+    virtual void build();
     virtual void clear();
     
     
@@ -53,10 +55,10 @@ namespace hlcg {
     Node *place;
     
   public:
-    FindNamedNode(Node *place, std::wstring name);
+    FindNamedNode(Assembly *ass, Node *place, std::wstring name);
     
   public:
-    virtual void build(Build &b);
+    virtual void build();
     virtual void clear();
     
     virtual std::vector<Node *> & get_selected() { return selected; }

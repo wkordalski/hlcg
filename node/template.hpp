@@ -12,10 +12,10 @@ namespace hlcg {
     std::vector<Node *> params;
     
   public:
-    Specialization(Node *templat, std::vector<Node*> params = {});
+    Specialization( hlcg::Assembly *ass, hlcg::Node *templat, std::vector< hlcg::Node * > params = {} );
     
   public:
-    virtual void build(Build &b);
+    virtual void build();
     virtual void clear();
     
     virtual bool is_selector() { return true; }
