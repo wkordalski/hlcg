@@ -21,14 +21,34 @@ namespace hlcg {
     std::vector<Template *> templates;
     for(Node *n : sel->get_selected())
     {
-      // should be a template
       auto *tpl = dynamic_cast<Template *>(n);
-      // should be specializable
+      // should be template
       if(tpl == nullptr) continue;
+      // we can't pass more params then template can get...
+      if(tpl->declaration().size() < params.size()) continue;
       templates.push_back(tpl);
     }
     
     // Prepare args...
+    for(Node *n : this->params)
+    {
+      n->build();
+    }
+    
+    // Do some complicated algorithm to use proper template.
+    // No... Let's simply try to find matching patterns.
+    for(Template *n : templates)
+    {
+      auto decl = n->declaration();
+      int idx = 0;
+      for(Node * m : decl)
+      {
+	auto holder = dynamic_cast<TemplateParamHolder *>(m);
+	if(holder == nullptr) throw new Error(this, "Template declaration should be a list of TemplateParamHolders");
+	// Let's try to match the nodes with holder
+	// And how to store matching result?
+      }
+    }
   }
 
   void Specialization::clear()

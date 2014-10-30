@@ -1,11 +1,28 @@
 #pragma once
 
 #include "node.hpp"
+#include "description.hpp"
 
 #include <vector>
 
 namespace hlcg {
-  class Specialization : public Node
+  
+  // Represents a template parameter
+  // which is a Compile-time value
+  class TemplateValueHolder : public Node, public TemplateParamHolder
+  {
+  };
+  
+  // Represents a template parameter
+  // which is a Type
+  class TemplateTypeHolder : public Node, public TemplateParamHolder
+  {
+  };
+  
+  // Specialization
+  // It can get EVERY correct node
+  // Class specialization is simple replacement of nodes holders with real nodes
+  class Specialization : public Node,  public Selector
   {
   public:
     Node *templ;
@@ -18,10 +35,10 @@ namespace hlcg {
     virtual void build();
     virtual void clear();
     
-    virtual bool is_selector() { return true; }
-    virtual std::vector<Node *> * get_selected() { return &selected; }
+    virtual std::vector<Node *> & get_selected() { return selected; }
     
   protected:
+    // Selects only one node!!! - Else - ambiguity error.
     std::vector<Node *> selected;
   };
 }

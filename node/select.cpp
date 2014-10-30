@@ -33,6 +33,7 @@ namespace hlcg {
   
   void Member::build()
   {
+    if(is_built) return;
     auto *selector = dynamic_cast<Selector*>(this->place);
     if(selector == nullptr) throw Error(this, "place is not a selector");
     
