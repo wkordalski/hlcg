@@ -2,11 +2,7 @@ project(HLCG)
 cmake_minimum_required(VERSION 2.6)
 
 set(SOURCES
-  assembly/assembly.cpp
-  
-  node/module.cpp
-  node/select.cpp
-  node/template.cpp
+  hlcg.cpp
 
   plugin/manager.cpp
   plugin/plugin.cpp

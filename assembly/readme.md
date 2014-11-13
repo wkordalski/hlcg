@@ -1,2 +1,0 @@
-HLCG assembly subsystem
-=======================
